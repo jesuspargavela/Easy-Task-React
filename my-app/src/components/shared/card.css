@@ -1,0 +1,20 @@
+.card {
+  margin-bottom: 0.5rem;
+  padding: 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(20, 15, 15, 0.595);
+  border-radius: 1rem;
+  width: 100%;
+  box-shadow: 1px 5px 5px rgba(0, 0, 0, 0.5);
+}
+
+.card:hover,
+.selected {
+  color: black;
+  background-color: blueviolet;
+}
+
+.card,
+.card:hover {
+  cursor: pointer;
+}

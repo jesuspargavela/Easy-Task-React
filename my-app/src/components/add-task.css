@@ -1,0 +1,25 @@
+.add-task-container {
+  color: white;
+}
+
+.add-task-container_content {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.add-task-container_actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.cancel-button {
+  background-color: rgb(40, 17, 62);
+}
+
+#summary {
+  resize: none;
+}

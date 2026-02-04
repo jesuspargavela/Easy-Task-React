@@ -1,0 +1,11 @@
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.profile-card img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}

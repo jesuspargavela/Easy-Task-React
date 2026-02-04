@@ -1,0 +1,19 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom, #2c0a4c, #450d80);
+  height: 30vh;
+  width: 55vw;
+  padding: 7rem;
+  border-bottom-left-radius: 0.2rem;
+  border-bottom-right-radius: 0.2rem;
+  box-shadow: 1px 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header img {
+  width: 6rem;
+  height: 6rem;
+  margin-bottom: 0.5rem;
+}

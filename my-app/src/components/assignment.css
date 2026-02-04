@@ -1,0 +1,22 @@
+.task-card {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: blueviolet;
+}
+
+.task-card_content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.task-card_actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.complete-button {
+  background-color: green;
+}   

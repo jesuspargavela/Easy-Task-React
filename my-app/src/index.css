@@ -1,0 +1,23 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  font-family: Arial, sans-serif;
+  color: white;
+  background-color: rgb(55, 12, 186);
+}
+
+button {
+  cursor: pointer;
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 0.3rem;
+  background-color: rgb(55, 12, 186);
+  color: white;
+  font-weight: bold;
+}
