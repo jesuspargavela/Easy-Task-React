@@ -2,10 +2,12 @@ import "./task-list.css";
 
 import Assignment from "./Assignment";
 
+import type { Task } from "../models/task";
+
 function TaskList({
   id,
   tasks,
-  deleteTask,
+  setTasks,
 }: {
   id: string;
   tasks: Array<{
@@ -15,7 +17,7 @@ function TaskList({
     summary: string;
     dueDate: string;
   }>;
-  deleteTask: (taskId: string) => void;
+  setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
 }) {
   const filteredTasks = tasks.filter((task) => task.userId === id);
 
@@ -24,7 +26,7 @@ function TaskList({
       <ul className="task-list">
         {filteredTasks.map((task) => (
           <li key={task.id}>
-            <Assignment task={task} deleteTask={deleteTask} />
+            <Assignment task={task} setTasks={setTasks} />
           </li>
         ))}
       </ul>

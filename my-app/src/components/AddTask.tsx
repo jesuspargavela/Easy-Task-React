@@ -4,15 +4,17 @@ import "./add-task.css";
 
 import type { Task } from "../models/task";
 
+import { createTask } from "../services/task.service";
+
 function AddTask({
   closeDialog,
   id,
-  createTask,
+  setTasks,
   length,
 }: {
   closeDialog: () => void;
   id: string;
-  createTask: (task: Task) => void;
+  setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
   length: number;
 }) {
   const [title, setTitle] = useState("");
@@ -30,7 +32,7 @@ function AddTask({
       dueDate,
     };
 
-    createTask(newTask);
+    createTask(newTask, setTasks);
 
     event.target.reset();
 

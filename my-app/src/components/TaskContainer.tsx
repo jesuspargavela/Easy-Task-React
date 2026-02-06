@@ -10,72 +10,14 @@ import Dialog from "./shared/Dialog";
 
 import "./task-container.css";
 
+import { fetchTasks } from "../services/task.service";
+
 function TaskContainer(profile: Profile) {
   const [tasks, setTasks] = useState<Task[]>([]);
 
   useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const response = await fetch("/api/tasks");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setTasks([...data.tasks]);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchTasks();
+    fetchTasks(setTasks);
   }, []);
-
-  const createTask = async (newTask: Task) => {
-    try {
-      const response = await fetch("/api/tasks/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newTask),
-      });
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const data = await response.json();
-
-      setTasks((prevTasks) => [...prevTasks, data.task]);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const deleteTask = async (taskId: string) => {
-    try {
-      const response = await fetch(
-        `/api/tasks/${taskId}/`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ id: taskId }),
-        },
-      );
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const data = await response.json();
-
-      setTasks((prevTasks) => prevTasks.filter((task) => task.id !== data.id));
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -96,12 +38,12 @@ function TaskContainer(profile: Profile) {
           Add Task
         </button>
       </article>
-      <TaskList id={profile.id} tasks={tasks} deleteTask={deleteTask} />
+      <TaskList id={profile.id} tasks={tasks} setTasks={setTasks} />
       <Dialog ref={dialogRef}>
         <AddTask
           closeDialog={closeDialog}
           id={profile.id}
-          createTask={createTask}
+          setTasks={setTasks}
           length={tasks.length}
         />
       </Dialog>

@@ -1,15 +1,17 @@
 import type { Task } from "../models/task";
 
+import { deleteTask } from "../services/task.service";
+
 import { formatDate } from "../utils/formatDate";
 
 import "./assignment.css";
 
 function Assignment({
   task,
-  deleteTask,
+  setTasks
 }: {
   task: Task;
-  deleteTask: (taskId: string) => void;
+  setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
 }) {
   return (
     <article className="task-card">
@@ -22,7 +24,7 @@ function Assignment({
         <button
           className="complete-button"
           type="button"
-          onClick={() => deleteTask(task.id)}
+          onClick={() => deleteTask(task.id, setTasks)}
         >
           Complete
         </button>
