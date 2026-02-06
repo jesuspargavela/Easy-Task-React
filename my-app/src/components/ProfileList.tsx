@@ -6,6 +6,8 @@ import "./profile-list.css";
 
 import type { Profile as ProfileModel } from "../models/profile";
 
+import { fetchProfiles } from "../services/user.service";
+
 function ProfileList({
   getProfile,
 }: {
@@ -15,20 +17,7 @@ function ProfileList({
   const [selectedProfileId, setSelectedProfileId] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchProfiles = async () => {
-      try {
-        const response = await fetch("/api/users");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setProfiles([...data.users]);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchProfiles();
+    fetchProfiles(setProfiles);
   }, []);
 
   return (
