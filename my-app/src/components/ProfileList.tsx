@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Profile from "./Profile";
 
@@ -6,16 +6,30 @@ import "./profile-list.css";
 
 import type { Profile as ProfileModel } from "../models/profile";
 
-import { DUMMY_USERS } from "../services/dummy-users";
-
 function ProfileList({
   getProfile,
 }: {
   getProfile: (profile: ProfileModel) => void;
 }) {
-  const profiles: ProfileModel[] = DUMMY_USERS;
-
+  const [profiles, setProfiles] = useState<ProfileModel[]>([]);
   const [selectedProfileId, setSelectedProfileId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchProfiles = async () => {
+      try {
+        const response = await fetch("/api/users");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setProfiles([...data.users]);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchProfiles();
+  }, []);
 
   return (
     <>

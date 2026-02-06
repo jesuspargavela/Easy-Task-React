@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import type { Profile } from "../models/profile";
 import type { Task } from "../models/task";
@@ -10,17 +10,71 @@ import Dialog from "./shared/Dialog";
 
 import "./task-container.css";
 
-import { dummyTasks } from "../services/dummy-tasks";
-
 function TaskContainer(profile: Profile) {
-  const [tasks, setTasks] = useState<Task[]>(dummyTasks);
+  const [tasks, setTasks] = useState<Task[]>([]);
 
-  const createTask = (newTask: Task) => {
-    setTasks((prevTasks) => [...prevTasks, newTask]);
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await fetch("/api/tasks");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setTasks([...data.tasks]);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchTasks();
+  }, []);
+
+  const createTask = async (newTask: Task) => {
+    try {
+      const response = await fetch("/api/tasks/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newTask),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+
+      setTasks((prevTasks) => [...prevTasks, data.task]);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const deleteTask = (taskId: string) => {
-    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+  const deleteTask = async (taskId: string) => {
+    try {
+      const response = await fetch(
+        `/api/tasks/${taskId}/`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: taskId }),
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+
+      setTasks((prevTasks) => prevTasks.filter((task) => task.id !== data.id));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const dialogRef = useRef<HTMLDialogElement>(null);
